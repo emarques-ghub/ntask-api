@@ -32,6 +32,18 @@ module.exports = app => {
         // })
         .get((req, res) => {
             // "/tasks/1" lista tarefa
+            Tasks.findOne({where: req.params})
+                .then(result => {
+                    if(result) {
+                        res.json(result);
+                    }
+                    else {
+                        res.sendStatus(404);
+                    }
+                })
+                .catch(error => {
+                    res.status(412).json({msg: error.message});
+                });
         })
         .put((req, res) => {
             // "/tasks/1" cadastra nova tarefa
