@@ -1,5 +1,5 @@
 module.exports = app => {
-    app.db.sync()
+    app.db.sequelize.sync()
     .then(() => {
         console.log('Database connected...');
         app.listen(app.get("port"), () => {
