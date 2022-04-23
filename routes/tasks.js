@@ -47,6 +47,7 @@ module.exports = app => {
         })
         .put((req, res) => {
             // "/tasks/1" cadastra nova tarefa
+            Tasks.update
         })
         .delete((req, res) => {
             // "/tasks/1" exclui tarefa
