@@ -1,27 +1,26 @@
+const bcrypt = require('bcrypt');
 const jwt = require('jwt-simple');
+const config = require('../config')
 
 module.exports = app => {
     const Users = app.db.models.Users;
-    const cfg = app.libs.config;
+    const { secret } = config.jwt;
 
-    app.post("/token", (req, res) => {
-        if(req.body.email && req.body.password) {
-            const email = req.body.email;
-            const password = req.body.password;
-            Users.findOne({where: {email: email}})
-                .then(user => {
-                    if(Users.isPassword(user.password, password)) {
-                        const payload = {id: user.id};
-                        res.json({
-                            token: jwt.encode(payload, cfg.jwtSecret)
-                        });
-                    } else {
-                        res.sendStatus(404);
-                    }
-                })
-                .catch(error => res.sendStatus(401));
-        } else {
-            res.sendStatus(401);
-        }
+    app.post("/token", async (req, res) => {
+        try {
+            const { email, password } = req.body;
+            if (email && password) {
+              const where = { email };
+              const user = await Users.findOne({ where });
+              if (bcrypt.compareSync(password, user.password)) {
+                const payload = { id: user.id };
+                const token = jwt.encode(payload, secret);
+                return res.json({ token });
+              }
+            }
+            return res.sendStatus(401);
+          } catch (err) {
+            return res.sendStatus(401);
+          }
     });
 };
