@@ -10,6 +10,8 @@ module.exports = {
             logging: true,
         }
     },
-    jwtSecret: "NTa$k-AP1",
-    jwtSession: {session: false}
+    jwt: {
+        secret: 'Nta$K-AP1',
+        options: { session: false }
+      }
 };

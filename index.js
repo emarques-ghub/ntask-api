@@ -13,6 +13,7 @@ consign()
     .then("libs/middlewares.js")
     .then("routes")
     .then("libs/boots.js")
+    .then("libs/init.js")
     .into(app);
 
 //app.listen(PORT, () => console.log(`NTask API - porta ${PORT}`));

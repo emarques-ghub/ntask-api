@@ -1,28 +1,32 @@
 const passport = require('passport');
-const ExtractJwt = require('passport-jwt').ExtractJwt
-const {Strategy} = require('passport-jwt');
+const { Strategy, ExtractJwt } = require('passport-jwt');
+const config = require('./libs/config');
 
-module.exports = app => {
-    const Users = app.db.models.Users;
-    const cfg = app.libs.config;
-    const strategy = new Strategy({secretOrKey: cfg.jwtSecret, jwtFromRequest: ExtractJwt.fromHeader('authorization')},
-        (payload, done) =>{
-            Users.finfByPk(payload.id)
-                .then(user => {
-                    if(user) {
-                        return done(null, {
-                            id: user.id,
-                            email: user.email
-                        });
-                    }
-                    return done(null, false);
-                })
-                .catch(error => done(error, null));
-        });
-    passport.use(strategy);
- 
-    return {
-        initialize: () => passport.initialize(),
-        authenticate: () => passport.authenticate("jwt", cfg.jwtSession),
-    };
+module.exports = (app) => {
+  const Users = app.db.models.Users;
+  const { jwt } = config
+
+  const params = {
+    secretOrKey: jwt.secret,
+    jwtFromRequest: ExtractJwt.fromHeader('authorization')
+  };
+
+  passport.use(
+    new Strategy(params, async (payload, done) => {
+      try {
+        const { id } = payload;
+        const attributes = ['id', 'email'];
+        const options = { attributes };
+        const user = await Users.findByPk(id, options);
+        done(null, user);
+      } catch (err) {
+        done(err, null);
+      }
+    })
+  );
+
+  return {
+    initialize: () => passport.initialize(),
+    authenticate: () => passport.authenticate('jwt', jwt.options)
+  };
 };
