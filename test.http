@@ -2,15 +2,35 @@
 GET http://localhost:3000/tasks
 
 ###
-GET http://localhost:3000
-
-###
-GET https://example.com/topics/1 HTTP/1.1
+GET http://localhost:3000/users/1
 
 ###
 POST http://localhost:3000/tasks HTTP/1.1
 content-type: application/json
 
 {
-    "title": "Dirigir"
+    "title": "Compras"
 }
+
+###
+PUT http://localhost:3000/tasks/5 HTTP/1.1
+content-type: application/json
+
+{
+    "title": "Fazer Compras"
+}
+
+###
+DELETE http://localhost:3000/tasks/5 HTTP/1.1
+
+###
+POST http://localhost:3000/users HTTP/1.1
+content-type: application/json
+
+{
+    "name": "User 3",
+    "email": "user3@email.com"
+}
+
+###
+DELETE http://localhost:3000/users/3 HTTP/1.1

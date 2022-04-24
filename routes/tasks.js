@@ -47,10 +47,19 @@ module.exports = app => {
         })
         .put((req, res) => {
             // "/tasks/1" cadastra nova tarefa
-            Tasks.update
+            Tasks.update(req.body, {where: req.params})
+            .then(result => res.sendStatus(204))
+            .catch(error => {
+                res.status(412).json({msg: error.message});
+            });
         })
         .delete((req, res) => {
             // "/tasks/1" exclui tarefa
+            Tasks.destroy({where: req.params})
+                .then(result => res.sendStatus(204))
+                .catch(error => {
+                    res.status(412).json({msg: error.message});
+                });
         });
 
     };
