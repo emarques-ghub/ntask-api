@@ -34,3 +34,6 @@ content-type: application/json
 
 ###
 DELETE http://localhost:3000/users/3 HTTP/1.1
+
+###
+GET http://localhost:3000/token HTTP/1.1

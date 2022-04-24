@@ -1,3 +1,5 @@
+const bcrypt = require('bcrypt');
+
 module.exports = (sequelize, DataTypes)=> {
     const Users = sequelize.define("Users", {
         id: {
@@ -19,10 +21,25 @@ module.exports = (sequelize, DataTypes)=> {
             validate: {
                 notEmpty: true
             }
+        },
+        password: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            validate: {
+              notEmpty: true
+            },
+            set(value) {
+              const salt = bcrypt.genSaltSync();
+              const password = bcrypt.hashSync(value, salt);
+              this.setDataValue('password', password);
+            }
         }
     })
     Users.associate = function(models) {
                 Users.hasMany(models.Tasks);
     };
+    Users.isPassword = function(encodePassword, password){
+        return bcrypt.compareSync(password, encodePassword);
+    }
     return Users;
 }
