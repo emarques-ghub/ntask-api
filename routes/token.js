@@ -3,7 +3,7 @@ const jwt = require('jwt-simple');
 const config = require('../config')
 
 module.exports = app => {
-    const Users = app.db.models.Users;
+    const Users = app.models.users;
     const { secret } = config.jwt;
 
     app.post("/token", async (req, res) => {

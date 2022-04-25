@@ -1,8 +1,13 @@
 ###
 GET http://localhost:3000/tasks
+content-type: application/json
+
+{
+    "authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.S1Cg_Ilvjkhb5e0YIUFwWvhtIeqkdjhmDx9IBKMf5qg"
+}
 
 ###
-GET http://localhost:3000/users
+GET http://localhost:3000
 
 ###
 POST http://localhost:3000/tasks HTTP/1.1
@@ -40,6 +45,6 @@ POST http://localhost:3000/token HTTP/1.1
 content-type: application/json
 
 {
-    "email": "admin@email.com",
-    "password": "senha"
+    "email": "admin@mail.net",
+    "password": "12345"
 }

@@ -3,7 +3,7 @@ const { Strategy, ExtractJwt } = require('passport-jwt');
 const config = require('./config');
 
 module.exports = (app) => {
-  const Users = app.db.models.Users;
+  const Users = app.models.users;
   const { jwt } = config
 
   const params = {

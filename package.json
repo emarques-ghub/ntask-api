@@ -4,7 +4,7 @@
   "description": "API de gestão de tarefas",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_ENV=test mocha test/**/*.js",
+    "test": "NODE_ENV=test mocha --timeout 5000 test/**/*.js",
     "start": "babel-node index.js"
   },
   "author": "Eduardo Marques",

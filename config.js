@@ -1,3 +1,3 @@
 const env = process.env.NODE_ENV || 'development';
 
-module.exports = require(`./libs/config.${env}.js`);
+module.exports = require(`./config/config.${env}.js`);
