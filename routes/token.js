@@ -5,7 +5,22 @@ const config = require('../config')
 module.exports = app => {
     const Users = app.models.users;
     const { secret } = config.jwt;
-
+/**
+ * @api {post} /token Token autenticado
+ * @apiGroup Credencial
+ * @apiParam {String} email Email de usuário
+ * @apiParam {String} password Senha de usuário
+ * @apiParamExample {json} Entrada
+ *  {
+ *  "email": "john@connor.net",
+ * "password": "1234546"}
+ * @apiSuccess {String} token Token de Usuarios autenticado
+ * @apiSuccessExample {json} Sucesso
+ *  HTTP/1.1 200 OK
+ *  {"token":"xyz.abc.123.hgf"}
+ * @apiErrorExample {json} Erro de autenticação
+ *  HTTP/1.1 401 Unauthorized
+ */
     app.post("/token", async (req, res) => {
         try {
             const { email, password } = req.body;

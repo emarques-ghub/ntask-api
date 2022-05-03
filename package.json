@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "NODE_ENV=test mocha --timeout 5000 test/**/*.js",
-    "start": "babel-node index.js"
+    "start": "npm run apidoc && babel-node index.js",
+    "apidoc": "apidoc -i routes/ -o public/apidoc"
   },
   "author": "Eduardo Marques",
   "license": "ISC",
@@ -13,6 +14,7 @@
     "babel-cli": "^6.26.0",
     "bcrypt": "^5.0.1",
     "consign": "^0.1.6",
+    "cors": "^2.8.5",
     "express": "^4.17.3",
     "jwt-simple": "^0.5.6",
     "passport": "^0.5.2",
@@ -21,6 +23,7 @@
     "sqlite3": "^5.0.5"
   },
   "devDependencies": {
+    "apidoc": "^0.51.1",
     "chai": "^4.3.6",
     "mocha": "^9.2.2",
     "supertest": "^6.2.2"
