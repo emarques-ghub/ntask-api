@@ -1,9 +1,9 @@
 const bodyParser = require('body-parser');
 const express = require('express');
-const compression = require('compression');
-const cors = require('cors');
-//const helmet = require('helmet');
 const morgan = require('morgan');
+const cors = require('cors');
+const compression = require('compression');
+const helmet = require('helmet');
 const logger = require('./logger');
 
 module.exports = app => {
@@ -14,13 +14,13 @@ module.exports = app => {
       write: (log) => logger.info(log)
     }
   }));
-//   app.use(helmet());
-   app.use(cors({
-     origin: ['http://localhost:3001'],
-     methods: ['GET', 'POST', 'PUT', 'DELETE'],
-     allowedHeaders: ['Content-Type', 'Authorization']
-   }));
-   app.use(compression());
+  app.use(helmet());
+  app.use(cors({
+    origin: ['http://localhost:3001'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+  }));
+  app.use(compression());
   app.use(bodyParser.json());
   app.use(app.auth.initialize());
   app.use((req, res, next) => {
@@ -29,17 +29,3 @@ module.exports = app => {
   });
   app.use(express.static('public'));
 };
-
-
-//const bodyParser = require('body-parser');
-// module.exports = app => {
-//     app.set("port", 3000);
-//     app.set("json spaces", 4);
-//     app.use(bodyParser.json());
-//     app.use(app.auth.initialize());
-//     app.use((req, res, next) => {
-//         //Middleware de pré-execução das rotas
-//         delete req.body.id;
-//         next();
-//     });
-// };
